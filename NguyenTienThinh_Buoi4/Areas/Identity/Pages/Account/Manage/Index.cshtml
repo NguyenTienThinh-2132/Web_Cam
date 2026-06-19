@@ -1,0 +1,277 @@
+@page
+@model CamZone.Areas.Identity.Pages.Account.Manage.IndexModel
+@{
+    ViewData["Title"] = "Hồ Sơ - CamZone";
+    var name = User.Identity?.Name;
+}
+
+<style>
+    .manage-container {
+        display: flex;
+        gap: 32px;
+        min-height: 80vh;
+    }
+
+    .manage-sidebar {
+        flex: 0 0 220px;
+        background: #ffffff;
+        border: 1px solid var(--color-outline);
+        border-radius: 8px;
+        padding: 24px;
+    }
+
+    .manage-sidebar h5 {
+        font-family: 'Playfair Display', serif;
+        color: var(--color-primary);
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 24px;
+    }
+
+    .manage-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .manage-menu-item {
+        padding: 12px 16px;
+        color: var(--color-on-surface);
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border-left: 3px solid transparent;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .manage-menu-item:hover {
+        background: var(--color-surface-low);
+        color: var(--color-secondary);
+    }
+
+    .manage-menu-item.active {
+        background: var(--color-surface-low);
+        color: var(--color-secondary);
+        border-left-color: var(--color-secondary);
+        font-weight: 600;
+    }
+
+    .manage-content {
+        flex: 1;
+        background: var(--color-inverse);
+        color: var(--color-surface);
+        border-radius: 8px;
+        padding: 40px;
+    }
+
+    .manage-content h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .manage-content > p {
+        color: rgba(252, 249, 248, 0.7);
+        font-size: 0.95rem;
+        margin-bottom: 32px;
+    }
+
+    .profile-section {
+        display: flex;
+        gap: 32px;
+        margin-bottom: 40px;
+        padding-bottom: 40px;
+        border-bottom: 1px solid rgba(212, 163, 115, 0.2);
+    }
+
+    .profile-avatar {
+        flex: 0 0 120px;
+        height: 120px;
+        background: rgba(212, 163, 115, 0.15);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        flex-shrink: 0;
+    }
+
+    .profile-info h4 {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .profile-badge {
+        display: inline-block;
+        background: rgba(212, 163, 115, 0.2);
+        color: var(--color-secondary);
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 16px;
+    }
+
+    .profile-detail-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+        margin-bottom: 32px;
+    }
+
+    .profile-detail-item {
+        padding: 16px;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+        border: 1px solid rgba(212, 163, 115, 0.1);
+    }
+
+    .profile-detail-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--color-secondary);
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .profile-detail-value {
+        font-size: 1rem;
+        color: var(--color-surface);
+    }
+
+    .btn-edit {
+        background: transparent;
+        border: 1px solid var(--color-secondary);
+        color: var(--color-secondary);
+        padding: 12px 28px;
+        border-radius: 8px;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 0.05em;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        align-self: flex-start;
+    }
+
+    .btn-edit:hover {
+        background: var(--color-secondary);
+        color: var(--color-primary);
+    }
+
+    @@media (max-width: 992px) {
+        .manage-container {
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .manage-sidebar {
+            flex: 0 0 auto;
+        }
+
+        .profile-detail-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .profile-section {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .profile-avatar {
+            margin: 0 auto;
+        }
+
+        .btn-edit {
+            align-self: center;
+        }
+    }
+</style>
+
+<div class="container py-5">
+    <div class="manage-container">
+        <!-- SIDEBAR MENU -->
+        <div class="manage-sidebar">
+            <h5>Account</h5>
+            <div class="manage-menu">
+                <a href="#" class="manage-menu-item active">
+                    <i class="bi bi-person-fill" style="width:18px;"></i>
+                    Profile
+                </a>
+                <a href="#" class="manage-menu-item">
+                    <i class="bi bi-receipt" style="width:18px;"></i>
+                    Đơn hàng của tôi
+                </a>
+                <a href="#" class="manage-menu-item">
+                    <i class="bi bi-key-fill" style="width:18px;"></i>
+                    Đổi mật khẩu
+                </a>
+                <a href="#" class="manage-menu-item">
+                    <i class="bi bi-shield-lock" style="width:18px;"></i>
+                    Bảo mật
+                </a>
+                <a href="#" class="manage-menu-item">
+                    <i class="bi bi-file-earmark-text" style="width:18px;"></i>
+                    Dữ liệu cá nhân
+                </a>
+            </div>
+        </div>
+
+        <!-- CONTENT AREA -->
+        <div class="manage-content">
+            <h2>Thông Tin Hồ Sơ</h2>
+            <p>Quản lý thông tin cá nhân và tùy chỉnh các cài đặt tài khoản của bạn.</p>
+
+            <!-- PROFILE SECTION -->
+            <div class="profile-section">
+                <div class="profile-avatar">
+                    <i class="bi bi-person"></i>
+                </div>
+                <div class="profile-info" style="flex:1;">
+                    <h4>@(User.FindFirst("FullName")?.Value ?? name ?? "User")</h4>
+                    <div class="profile-badge">Collector Level: Enthusiast</div>
+                    <p style="color:rgba(252, 249, 248, 0.6); font-size:0.95rem; margin:0;">
+                        Thành viên tích cực của cộng đồng CamZone từ năm 2024
+                    </p>
+                </div>
+            </div>
+
+            <!-- PROFILE DETAILS GRID -->
+            <div class="profile-detail-grid">
+                <div class="profile-detail-item">
+                    <div class="profile-detail-label">Email</div>
+                    <div class="profile-detail-value">@(User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value ?? "N/A")</div>
+                </div>
+                <div class="profile-detail-item">
+                    <div class="profile-detail-label">Số điện thoại</div>
+                    <div class="profile-detail-value">+84 (0) 123 456 789</div>
+                </div>
+                <div class="profile-detail-item">
+                    <div class="profile-detail-label">Địa chỉ</div>
+                    <div class="profile-detail-value">TP.HCM, Việt Nam</div>
+                </div>
+                <div class="profile-detail-item">
+                    <div class="profile-detail-label">Ngày tham gia</div>
+                    <div class="profile-detail-value">01/01/2024</div>
+                </div>
+            </div>
+
+            <!-- EDIT BUTTON -->
+            <button class="btn-edit">
+                <i class="bi bi-pencil-square me-2"></i>
+                Chỉnh Sửa Hồ Sơ
+            </button>
+        </div>
+    </div>
+</div>

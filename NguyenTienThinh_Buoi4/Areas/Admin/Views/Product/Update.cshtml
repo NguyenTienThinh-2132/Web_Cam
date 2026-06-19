@@ -1,0 +1,202 @@
+@model CamZone.Models.Product
+
+@{
+    ViewData["Title"] = "Sửa sản phẩm";
+    var imageList = Model.Images?
+        .Select(i => i.Url)
+        .Where(url => !string.IsNullOrWhiteSpace(url))
+        .Take(3)
+        .ToList() ?? new List<string>();
+}
+
+<!-- Page header -->
+<div class="bg-light border-bottom py-4">
+    <div class="container">
+        <nav aria-label="breadcrumb" class="mb-2">
+            <ol class="breadcrumb mb-0 small">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-decoration-none">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a asp-action="Index" class="text-decoration-none">Sản phẩm</a></li>
+                <li class="breadcrumb-item active">Chỉnh sửa</li>
+            </ol>
+        </nav>
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="fw-bold mb-0"><i class="bi bi-pencil-square text-warning me-2"></i>Chỉnh sửa sản phẩm</h2>
+            <a asp-action="Index" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-arrow-left me-1"></i>Quay lại
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container py-4">
+    <div class="row g-4">
+        <!-- Form -->
+        <div class="col-lg-8">
+            <form asp-action="Update" method="post" enctype="multipart/form-data">
+                <input type="hidden" asp-for="Id" />
+                <div asp-validation-summary="All" class="alert alert-danger small mb-3"></div>
+
+                <!-- Basic info -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white border-bottom py-3">
+                        <h6 class="fw-semibold mb-0"><i class="bi bi-info-circle text-warning me-2"></i>Thông tin cơ bản</h6>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-3">
+                            <div class="col-md-8">
+                                <label asp-for="Name" class="form-label fw-semibold small text-uppercase text-muted" style="letter-spacing:.05em;">Tên sản phẩm <span class="text-danger">*</span></label>
+                                <input asp-for="Name" class="form-control form-control-lg" />
+                                <span asp-validation-for="Name" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="CategoryId" class="form-label fw-semibold small text-uppercase text-muted" style="letter-spacing:.05em;">Danh mục <span class="text-danger">*</span></label>
+                                <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-select form-select-lg"></select>
+                                <span asp-validation-for="CategoryId" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-5">
+                                <label asp-for="Price" class="form-label fw-semibold small text-uppercase text-muted" style="letter-spacing:.05em;">Giá bán (₫) <span class="text-danger">*</span></label>
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-text bg-light">₫</span>
+                                    <input asp-for="Price" class="form-control" />
+                                </div>
+                                <span asp-validation-for="Price" class="text-danger small"></span>
+                            </div>
+                            <div class="col-12">
+                                <label asp-for="Description" class="form-label fw-semibold small text-uppercase text-muted" style="letter-spacing:.05em;">Mô tả sản phẩm</label>
+                                <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                                <span asp-validation-for="Description" class="text-danger small"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Images -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white border-bottom py-3">
+                        <h6 class="fw-semibold mb-0"><i class="bi bi-images text-warning me-2"></i>Hình ảnh sản phẩm</h6>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-4">
+                            <!-- Main image preview -->
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small text-uppercase text-muted" style="letter-spacing:.05em;">Ảnh đại diện hiện tại</label>
+                                <div class="rounded-3 overflow-hidden border bg-light mb-2" style="height:160px;">
+                                    @if (!string.IsNullOrWhiteSpace(Model.ImageUrl))
+                                    {
+                                        <img id="previewImage" src="@Model.ImageUrl"
+                                             class="w-100 h-100" style="object-fit:cover;" alt="Ảnh đại diện" />
+                                    }
+                                    else
+                                    {
+                                        <div id="previewPlaceholder" class="w-100 h-100 d-flex align-items-center justify-content-center text-muted">
+                                            <div class="text-center"><i class="bi bi-image fs-2 opacity-25"></i><div class="small">Chưa có ảnh</div></div>
+                                        </div>
+                                        <img id="previewImage" class="w-100 h-100 d-none" style="object-fit:cover;" alt="" />
+                                    }
+                                </div>
+                                <label class="form-label fw-semibold small text-uppercase text-muted" style="letter-spacing:.05em;">Đổi ảnh đại diện</label>
+                                <input type="file" name="imageUrl" id="imageUrlInput" class="form-control" accept="image/*" />
+                            </div>
+
+                            <!-- Sub images -->
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small text-uppercase text-muted" style="letter-spacing:.05em;">Ảnh phụ hiện tại</label>
+                                <div id="thumbPreviewContainer" class="d-flex gap-2 flex-wrap mb-2" style="min-height:48px;">
+                                    @if (imageList.Any())
+                                    {
+                                        @foreach (var image in imageList)
+                                        {
+                                            <img src="@image" class="rounded-3 border"
+                                                 style="width:64px;height:64px;object-fit:cover;" alt="Ảnh phụ" />
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <small class="text-muted">Chưa có ảnh phụ</small>
+                                    }
+                                </div>
+                                <label class="form-label fw-semibold small text-uppercase text-muted" style="letter-spacing:.05em;">Upload ảnh phụ mới</label>
+                                <input type="file" name="imageUrls" id="imageUrlsInput" class="form-control" multiple accept="image/*" />
+                                <small class="text-muted">Chọn ảnh mới sẽ thay thế ảnh phụ cũ.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-warning btn-lg px-5">
+                        <i class="bi bi-check-circle me-2"></i>Cập nhật
+                    </button>
+                    <a asp-action="Display" asp-route-id="@Model.Id" class="btn btn-outline-secondary btn-lg px-4">
+                        <i class="bi bi-eye me-1"></i>Xem chi tiết
+                    </a>
+                    <a asp-action="Index" class="btn btn-outline-secondary btn-lg px-4">Hủy</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Info sidebar -->
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <h6 class="fw-semibold mb-3"><i class="bi bi-shield-check text-success me-2"></i>Lưu ý khi chỉnh sửa</h6>
+                    <ul class="small text-muted ps-3 mb-0">
+                        <li class="mb-2">Kiểm tra kỹ thông tin trước khi lưu</li>
+                        <li class="mb-2">Giá phải là số dương</li>
+                        <li class="mb-2">Upload ảnh mới sẽ thay thế ảnh cũ</li>
+                        <li class="mb-0">Tên sản phẩm không được để trống</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card border-warning border-0 shadow-sm mt-3">
+                <div class="card-body p-4 bg-warning-subtle rounded-3">
+                    <h6 class="fw-semibold text-warning-emphasis mb-2">
+                        <i class="bi bi-exclamation-triangle me-2"></i>Cảnh báo
+                    </h6>
+                    <p class="small text-warning-emphasis mb-0">
+                        Thay đổi giá hoặc thông tin sản phẩm sẽ được cập nhật ngay lập tức.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.getElementById('imageUrlInput').addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function (ev) {
+                const img = document.getElementById('previewImage');
+                const ph = document.getElementById('previewPlaceholder');
+                img.src = ev.target.result;
+                if (ph) ph.classList.add('d-none');
+                img.classList.remove('d-none');
+            };
+            reader.readAsDataURL(file);
+        });
+
+        document.getElementById('imageUrlsInput').addEventListener('change', function (e) {
+            const files = Array.from(e.target.files);
+            if (!files.length) return;
+            const container = document.getElementById('thumbPreviewContainer');
+            container.innerHTML = '';
+            files.slice(0, 5).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function (ev) {
+                    const img = document.createElement('img');
+                    img.src = ev.target.result;
+                    img.className = 'rounded-3 border';
+                    img.style.cssText = 'width:64px;height:64px;object-fit:cover;';
+                    container.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            });
+        });
+    </script>
+}

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CamZone</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/CamZone.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <!-- Header / Navbar -->
+    <header class="sticky-top">
+        <nav class="navbar navbar-expand-lg py-2 px-0">
+            <div class="d-flex align-items-center w-100">
+                <a class="navbar-brand fw-bold fs-3 me-3 ps-3" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="bi bi-camera-fill"></i> <span>CamZone</span>
+                </a>
+
+                <button class="navbar-toggler border-0 mx-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
+                        aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="bi bi-list fs-4"></i>
+                </button>
+
+                <div class="collapse navbar-collapse flex-grow-1" id="navbarMain">
+                    <ul class="navbar-nav mx-auto gap-1">
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-custom" asp-area="" asp-controller="Home" asp-action="Index">Trang chủ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-custom" asp-area="" asp-controller="SanPham" asp-action="Index">Sản phẩm</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link nav-link-custom dropdown-toggle" href="#" id="navbarDropdownCategory" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Danh mục
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownCategory" id="categoryDropdownList">
+                                <li><a class="dropdown-item small" href="/SanPham">Tất cả sản phẩm</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-custom" asp-area="" asp-controller="Home" asp-action="GioiThieu">Giới thiệu</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-custom" href="/#section-tuvan">Liên Hệ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-custom" href="#">Chính sách bảo hành</a>
+                        </li>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link nav-link-custom" asp-area="Admin" asp-controller="Category" asp-action="Index">Quản lý danh mục</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link nav-link-custom" asp-area="Admin" asp-controller="Product" asp-action="Index">Quản lý sản phẩm</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link nav-link-custom" asp-area="Admin" asp-controller="Order" asp-action="Index">Quản lý đơn hàng</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+
+                <div class="d-flex align-items-center gap-2 ms-auto pe-3">
+                    <!-- Đơn hàng của tôi (chỉ user login) -->
+                    @if (User.Identity != null && User.Identity.IsAuthenticated)
+                    {
+                        <a class="nav-link nav-link-custom" asp-area="" asp-controller="OrderCustomer" asp-action="Index">
+                            Đơn của tôi
+                        </a>
+                    }
+                    <!-- Cart button -->
+                    <a asp-area="" asp-controller="ShoppingCart" asp-action="Index" class="text-decoration-none position-relative d-inline-block">
+                        <button class="btn btn-light rounded-circle p-2" type="button" style="width:44px;height:44px;border:none;">
+                            <i class="bi bi-bag-fill fs-5"></i>
+                        </button>
+                        <span id="cart-count" class="position-absolute badge bg-danger rounded-circle" style="width:22px;height:22px;padding:0;display:flex;align-items:center;justify-content:center;font-size:0.7rem;z-index:2;">0</span>
+                    </a>
+                    <!-- Login partial -->
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main content -->
+    <main>
+        @RenderBody()
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer-main" class="mt-5 pt-5 pb-3">
+        <div class="container">
+            <div class="row g-4 pb-4">
+                <div class="col-lg-4">
+                    <div class="fs-4 fw-bold mb-3">
+                        <i class="bi bi-camera-fill"></i> <span>CamZone</span>
+                    </div>
+                    <p class="small mb-3">
+                        Nền tảng bán máy ảnh cao cấp, thiết bị nhiếp ảnh chính hãng, giao hàng nhanh toàn quốc.
+                    </p>
+                    <div class="d-flex gap-2">
+                        <a href="#" class="btn btn-outline-secondary btn-sm rounded-circle" style="width:36px;height:36px;padding:0;line-height:34px;text-align:center;">
+                            <i class="bi bi-facebook"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline-secondary btn-sm rounded-circle" style="width:36px;height:36px;padding:0;line-height:34px;text-align:center;">
+                            <i class="bi bi-instagram"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline-secondary btn-sm rounded-circle" style="width:36px;height:36px;padding:0;line-height:34px;text-align:center;">
+                            <i class="bi bi-tiktok"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline-secondary btn-sm rounded-circle" style="width:36px;height:36px;padding:0;line-height:34px;text-align:center;">
+                            <i class="bi bi-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-6 col-lg-2">
+                    <h6 class="fw-semibold mb-3">Mua sắm</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a asp-area="" asp-controller="SanPham" asp-action="Index" class="text-decoration-none footer-link">Tất cả sản phẩm</a></li>
+                        <li class="mb-2"><a asp-area="" asp-controller="Home" asp-action="Index" class="text-decoration-none footer-link">Danh mục</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-6 col-lg-2">
+                    <h6 class="fw-semibold mb-3">Hỗ trợ</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="#" class="text-decoration-none footer-link">Trung tâm trợ giúp</a></li>
+                        <li class="mb-2"><a href="#" class="text-decoration-none footer-link">Chính sách đổi trả</a></li>
+                        <li class="mb-2"><a href="#" class="text-decoration-none footer-link">Theo dõi đơn hàng</a></li>
+                        <li class="mb-2"><a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-decoration-none footer-link">Chính sách bảo mật</a></li>
+                        <li class="mb-2"><a href="#" class="text-decoration-none footer-link">Điều khoản sử dụng</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-4">
+                    <h6 class="fw-semibold mb-3">Liên hệ</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><i class="bi bi-telephone-fill me-2"></i>1800-9999 (Miễn phí)</li>
+                        <li class="mb-2"><i class="bi bi-envelope-fill me-2"></i>support@camzone.vn</li>
+                        <li class="mb-2"><i class="bi bi-geo-alt-fill me-2"></i>123 Nguyễn Huệ, Q.1, TP.HCM</li>
+                        <li class="mb-2"><i class="bi bi-clock-fill me-2"></i>T2 - CN: 8:00 - 21:00</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="text-center py-3">
+                <p class="mb-0 fw-semibold" style="font-size:1rem;">
+                    &copy; 2026 CamZone. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <!-- Toast container -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index:9999;">
+        <div id="cartToast" class="toast align-items-center border-0 rounded-3 shadow" role="alert">
+            <div class="d-flex">
+                <div class="toast-body d-flex align-items-center gap-2">
+                    <i class="bi bi-check-circle-fill fs-5"></i>
+                    <span id="toastMsg">Đã thêm vào giỏ hàng!</span>
+                </div>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            // Tải danh mục động vào dropdown
+            $.ajax({
+                url: '@Url.Action("GetCategories", "SanPham", new { area = "" })',
+                type: 'GET',
+                success: function (res) {
+                    if (res && res.length > 0) {
+                        var list = $('#categoryDropdownList');
+                        res.forEach(function (cat) {
+                            list.append('<li><a class="dropdown-item" href="/SanPham?categoryId=' + cat.id + '">' + cat.name + '</a></li>');
+                        });
+                    }
+                }
+            });
+
+            // Lấy số lượng cart khi load trang
+            $.ajax({
+                url: '@Url.Action("GetCartItemCount", "ShoppingCart", new { area = "" })',
+                type: 'GET',
+                success: function (res) {
+                    if (res && res.count !== undefined) $('#cart-count').text(res.count);
+                }
+            });
+
+            // AJAX Add to Cart cho tất cả .btn-add-cart
+            $(document).on('click', '.btn-add-cart', function () {
+                const btn = $(this);
+                const productId = btn.data('product-id');
+
+                btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-1"></span> Đang thêm...');
+
+                $.ajax({
+                    url: '@Url.Action("AddToCart", "ShoppingCart", new { area = "" })',
+                    type: 'GET',
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                    data: { productId: productId, quantity: 1 },
+                    success: function (res) {
+                        if (res.success) {
+                            // Cập nhật badge
+                            $('#cart-count').text(res.count);
+                            // Hiện toast
+                            $('#toastMsg').text(res.message);
+                            const toast = new bootstrap.Toast(document.getElementById('cartToast'), { delay: 2500 });
+                            toast.show();
+                        }
+                    },
+                    complete: function () {
+                        btn.prop('disabled', false).html('<i class="bi-cart-fill me-1"></i> Add to Cart');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

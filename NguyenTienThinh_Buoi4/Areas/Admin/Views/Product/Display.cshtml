@@ -1,0 +1,163 @@
+@model CamZone.Models.Product
+
+@{
+    ViewData["Title"] = "Chi tiết sản phẩm";
+    var thumbImages = Model.Images?
+        .Select(i => i.Url)
+        .Where(url => !string.IsNullOrWhiteSpace(url))
+        .ToList() ?? new List<string>();
+    bool canEdit   = User.IsInRole("Admin") || User.IsInRole("Employee");
+    bool canDelete = User.IsInRole("Admin");
+}
+
+<!-- Breadcrumb -->
+<div class="bg-light border-bottom py-3">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 small">
+                <li class="breadcrumb-item">
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="text-decoration-none">Trang chủ</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a asp-action="Index" class="text-decoration-none">Sản phẩm</a>
+                </li>
+                <li class="breadcrumb-item active">@Model.Name</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="container py-5">
+    <div class="row g-5">
+        <!-- Image gallery -->
+        <div class="col-lg-6">
+            <div class="sticky-lg-top" style="top:80px;">
+                <div class="rounded-4 overflow-hidden border bg-light mb-3" style="aspect-ratio:1;max-height:460px;">
+                    @if (!string.IsNullOrWhiteSpace(Model.ImageUrl))
+                    {
+                        <img id="mainProductImage" src="@Model.ImageUrl"
+                             class="w-100 h-100" style="object-fit:cover;" alt="@Model.Name" />
+                    }
+                    else
+                    {
+                        <div id="mainProductImage" class="w-100 h-100 d-flex align-items-center justify-content-center text-muted">
+                            <div class="text-center">
+                                <i class="bi bi-image fs-1 opacity-25"></i>
+                                <div class="small mt-2">Chưa có ảnh</div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                @if (thumbImages.Any())
+                {
+                    <div class="d-flex gap-2 flex-wrap">
+                        @if (!string.IsNullOrWhiteSpace(Model.ImageUrl))
+                        {
+                            <div class="thumb-item active" data-src="@Model.ImageUrl">
+                                <img src="@Model.ImageUrl" class="rounded-3 border border-primary"
+                                     style="width:72px;height:72px;object-fit:cover;cursor:pointer;" alt="Ảnh chính" />
+                            </div>
+                        }
+                        @foreach (var img in thumbImages)
+                        {
+                            <div class="thumb-item" data-src="@img">
+                                <img src="@img" class="rounded-3 border"
+                                     style="width:72px;height:72px;object-fit:cover;cursor:pointer;opacity:.7;transition:opacity .2s;"
+                                     alt="Ảnh phụ"
+                                     onmouseover="this.style.opacity='1'"
+                                     onmouseout="if(!this.parentElement.classList.contains('active'))this.style.opacity='.7'" />
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Product info -->
+        <div class="col-lg-6">
+            @if (Model.Category != null)
+            {
+                <span class="badge bg-primary-subtle text-primary rounded-pill px-3 py-2 mb-3">
+                    <i class="bi bi-tag me-1"></i>@Model.Category.Name
+                </span>
+            }
+
+            <h1 class="fw-bold mb-2" style="font-size:1.8rem;">@Model.Name</h1>
+
+            <div class="d-flex align-items-center gap-2 mb-3">
+                <div class="text-warning">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-half"></i>
+                </div>
+                <span class="text-muted small">(4.5) · 128 đánh giá</span>
+            </div>
+
+            <div class="price-tag display-6 fw-bold mb-4">
+                @Model.Price.ToString("N0")<span class="fs-4">₫</span>
+            </div>
+
+            <hr class="my-4" />
+
+            <div class="mb-4">
+                <h6 class="fw-semibold mb-2 text-uppercase text-muted small" style="letter-spacing:.05em;">Mô tả sản phẩm</h6>
+                <p class="text-muted lh-lg">
+                    @(string.IsNullOrWhiteSpace(Model.Description) ? "Chưa có mô tả." : Model.Description)
+                </p>
+            </div>
+
+            <div class="d-flex flex-wrap gap-2 mb-4">
+                <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2">
+                    <i class="bi bi-check-circle me-1"></i>Hàng chính hãng
+                </span>
+                <span class="badge bg-info-subtle text-info border border-info-subtle px-3 py-2">
+                    <i class="bi bi-truck me-1"></i>Giao hàng nhanh
+                </span>
+                <span class="badge bg-warning-subtle text-warning border border-warning-subtle px-3 py-2">
+                    <i class="bi bi-arrow-counterclockwise me-1"></i>Đổi trả 30 ngày
+                </span>
+            </div>
+
+            <hr class="my-4" />
+
+            <div class="d-flex gap-3 flex-wrap">
+                @if (canEdit)
+                {
+                    <a asp-action="Update" asp-route-id="@Model.Id" class="btn btn-warning btn-lg px-4">
+                        <i class="bi bi-pencil me-2"></i>Chỉnh sửa
+                    </a>
+                }
+                @if (canDelete)
+                {
+                    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger btn-lg px-4">
+                        <i class="bi bi-trash me-2"></i>Xóa
+                    </a>
+                }
+                <a asp-action="Index" class="btn btn-outline-secondary btn-lg px-4">
+                    <i class="bi bi-arrow-left me-2"></i>Quay lại
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const mainImg = document.getElementById('mainProductImage');
+        const thumbItems = document.querySelectorAll('.thumb-item');
+        thumbItems.forEach(item => {
+            item.querySelector('img').addEventListener('click', function () {
+                if (mainImg.tagName === 'IMG') mainImg.src = item.dataset.src;
+                thumbItems.forEach(t => {
+                    t.classList.remove('active');
+                    t.querySelector('img').classList.replace('border-primary', 'border');
+                    t.querySelector('img').style.opacity = '.7';
+                });
+                item.classList.add('active');
+                this.classList.add('border-primary');
+                this.style.opacity = '1';
+            });
+        });
+    </script>
+}

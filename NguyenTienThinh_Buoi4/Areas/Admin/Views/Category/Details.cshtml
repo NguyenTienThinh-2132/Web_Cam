@@ -1,0 +1,82 @@
+@model CamZone.Models.Category
+
+@{
+    ViewData["Title"] = "Chi tiết danh mục";
+    bool canEdit   = User.IsInRole("Admin") || User.IsInRole("Employee");
+    bool canDelete = User.IsInRole("Admin");
+}
+
+<!-- Breadcrumb -->
+<div class="bg-light border-bottom py-3">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 small">
+                <li class="breadcrumb-item">
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="text-decoration-none">Trang chủ</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a asp-action="Index" class="text-decoration-none">Danh mục</a>
+                </li>
+                <li class="breadcrumb-item active">@Model.Name</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white border-bottom py-3 d-flex align-items-center gap-3">
+                    <div class="rounded-3 d-flex align-items-center justify-content-center bg-primary bg-opacity-10"
+                         style="width:48px;height:48px;flex-shrink:0;">
+                        <i class="bi bi-tag fs-4 text-primary"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold mb-0">@Model.Name</h5>
+                        <small class="text-muted">Danh mục #@Model.Id</small>
+                    </div>
+                </div>
+                <div class="card-body p-4">
+                    <table class="table table-borderless mb-0">
+                        <tr>
+                            <td class="text-muted small fw-semibold text-uppercase ps-0" style="letter-spacing:.05em;width:120px;">ID</td>
+                            <td class="fw-semibold">#@Model.Id</td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted small fw-semibold text-uppercase ps-0" style="letter-spacing:.05em;">Tên danh mục</td>
+                            <td class="fw-semibold">@Model.Name</td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted small fw-semibold text-uppercase ps-0" style="letter-spacing:.05em;">Số sản phẩm</td>
+                            <td>
+                                <span class="badge bg-primary-subtle text-primary px-3 py-2">
+                                    @(Model.Products?.Count ?? 0) sản phẩm
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="card-footer bg-white border-top py-3">
+                    <div class="d-flex gap-2 flex-wrap">
+                        @if (canEdit)
+                        {
+                            <a asp-action="Update" asp-route-id="@Model.Id" class="btn btn-warning px-4">
+                                <i class="bi bi-pencil me-2"></i>Sửa
+                            </a>
+                        }
+                        @if (canDelete)
+                        {
+                            <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger px-4">
+                                <i class="bi bi-trash me-2"></i>Xóa
+                            </a>
+                        }
+                        <a asp-action="Index" class="btn btn-outline-secondary px-4">
+                            <i class="bi bi-arrow-left me-2"></i>Quay lại
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

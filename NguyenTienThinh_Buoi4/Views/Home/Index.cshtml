@@ -1,0 +1,187 @@
+@{
+    ViewData["Title"] = "CamZone - Nền tảng máy ảnh cao cấp";
+}
+
+<!-- ===== HERO SECTION ===== -->
+<section class="hero-clean" style="background: url('/images/background.png') right center/cover no-repeat; min-height: 650px; display: flex; align-items: center; position: relative;">
+
+    <div class="container" style="position: relative; z-index: 1;">
+        <div class="row">
+            <!-- Left: Text Card -->
+            <div class="col-lg-5">
+                <!-- White Card Container -->
+                <div style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-radius: 16px; padding: 48px 40px; border: 1px solid rgba(255,255,255,0.5); box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
+
+                    <span class="badge hero-badge px-3 py-2 mb-4 d-inline-block">
+                        <i class="bi bi-camera-fill me-2"></i>Nâng Tầm Nghệ Thuật Nhiếp Ảnh
+                    </span>
+
+                    <h1 class="hero-title fw-bold lh-sm mb-3" style="color:var(--color-primary);">
+                        Khám Phá Thế Giới<br>
+                        <span class="hero-accent">Qua Ống Kính</span>
+                    </h1>
+
+                    <p class="mb-4" style="font-size:1rem; line-height:1.7; color:var(--color-muted);">
+                        CamZone mang đến những máy ảnh cao cấp từ các hãng nổi tiếng thế giới.
+                        Thiết bị chính hãng, bảo hành 24 tháng, giao hàng hỏa tốc trên toàn quốc.
+                    </p>
+
+                    <div class="d-flex gap-3 pt-2 flex-wrap">
+                        <a asp-area="" asp-controller="SanPham" asp-action="Index" class="btn btn-primary-hl">
+                            <i class="bi bi-shop me-2"></i>Khám phá ngay
+                        </a>
+                        <a href="#dich-vu" class="btn btn-outline-hl">
+                            <i class="bi bi-info-circle me-2"></i>Tìm hiểu thêm
+                        </a>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="d-flex gap-4 pt-4 flex-wrap">
+                        <div>
+                            <div class="fw-bold fs-5" style="color:var(--color-secondary);">500+</div>
+                            <div class="small" style="color:var(--color-muted); font-size:0.85rem;">Máy ảnh</div>
+                        </div>
+                        <div class="border-start ps-4" style="border-color:var(--color-outline);">
+                            <div class="fw-bold fs-5" style="color:var(--color-secondary);">10K+</div>
+                            <div class="small" style="color:var(--color-muted); font-size:0.85rem;">Khách hàng hài lòng</div>
+                        </div>
+                        <div class="border-start ps-4" style="border-color:var(--color-outline);">
+                            <div class="fw-bold fs-5" style="color:var(--color-primary);">4.9 <i class="bi bi-star-fill"></i></div>
+                            <div class="small" style="color:var(--color-muted); font-size:0.85rem;">Đánh giá</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== DỊCH VỤ NỔI BẬT ===== -->
+<section class="py-5" id="dich-vu" style="background:var(--color-surface-low);">
+    <div class="container">
+        <h2 class="fw-bold text-center mb-5" style="font-size:2.2rem;">
+            <i class="bi bi-stars me-2"></i>Dịch Vụ Nổi Bật
+        </h2>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="service-card text-center h-100">
+                    <div class="svc-icon mx-auto mb-3">
+                        <i class="bi bi-shield-check fs-4"></i>
+                    </div>
+                    <div class="fw-semibold mb-1">Bảo Hành 24 Tháng</div>
+                    <small>Bảo vệ toàn diện cho thiết bị của bạn</small>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="service-card text-center h-100">
+                    <div class="svc-icon mx-auto mb-3">
+                        <i class="bi bi-wrench-adjustable fs-4"></i>
+                    </div>
+                    <div class="fw-semibold mb-1">Vệ Sinh Miễn Phí</div>
+                    <small>Bảo dưỡng máy ảnh trọn đời không tính tiền</small>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="service-card text-center h-100">
+                    <div class="svc-icon mx-auto mb-3">
+                        <i class="bi bi-percent fs-4"></i>
+                    </div>
+                    <div class="fw-semibold mb-1">Trả Góp 0%</div>
+                    <small>Thỏa sức mua máy ảnh hàng triệu đồng</small>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="service-card text-center h-100">
+                    <div class="svc-icon mx-auto mb-3">
+                        <i class="bi bi-rocket-fill fs-4"></i>
+                    </div>
+                    <div class="fw-semibold mb-1">Giao Hàng 2h</div>
+                    <small>Hỏa tốc miễn phí tại TP.HCM và khu vực</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ===== TƯ VẤN MIỄN PHÍ ===== -->
+<section id="section-tuvan" class="py-5 bg-dark-section">
+    <div class="container py-4">
+        <div class="row g-4 align-items-stretch">
+
+            <!-- CỘT TRÁI: THÔNG TIN HỖ TRỢ (MÀU CAM) -->
+            <div class="col-lg-3 h-100">
+                <div class="consult-info-card h-100">
+                    <!-- Liên hệ Điện thoại -->
+                    <div class="info-group mb-4">
+                        <div class="info-icon">
+                            <i class="bi bi-telephone-outbound"></i>
+                        </div>
+                        <p class="info-label">Gọi Trung tâm hỗ trợ 24/7</p>
+                        <h4 class="info-value">1800 6750</h4>
+                    </div>
+
+                    <!-- Liên hệ Email -->
+                    <div class="info-group mb-4">
+                        <div class="info-icon">
+                            <i class="bi bi-envelope-at"></i>
+                        </div>
+                        <p class="info-label">Gửi mail cho chúng tôi</p>
+                        <h5 class="info-value">support@camzone.vn</h5>
+                    </div>
+
+                    <!-- Ảnh Nhân viên Hỗ trợ -->
+                    <div class="support-agent-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=400" alt="Support Agent" class="img-fluid support-agent-img">
+                    </div>
+                </div>
+            </div>
+
+            <!-- CỘT PHẢI: FORM ĐĂNG KÝ TƯ VẤN (MÀU TRẮNG) -->
+            <div class="col-lg-9 h-100">
+                <div class="consult-form-card h-100">
+                    <span class="consult-subtitle">------- TƯ VẤN MIỄN PHÍ</span>
+                    <h2 class="consult-title">Liên Hệ Ngay Để Được Tư Vấn</h2>
+                    <p class="consult-desc">Đội ngũ chuyên viên luôn sẵn sàng hỗ trợ, giải đáp thắc mắc và mang đến giải pháp phù hợp nhất cho bạn.</p>
+
+                    <form id="consultForm" method="post" action="#">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="form-label">Họ và tên</label>
+                                <input type="text" class="form-control consult-input" placeholder="Nhập họ và tên" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Điện thoại</label>
+                                <input type="tel" class="form-control consult-input" placeholder="Nhập số điện thoại" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control consult-input" placeholder="Nhập email" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Địa chỉ</label>
+                                <input type="text" class="form-control consult-input" placeholder="Nhập địa chỉ" />
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Nội dung</label>
+                                <textarea class="form-control consult-textarea" rows="4" placeholder="Nhập nội dung tư vấn"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Nút Gửi Thông Tin -->
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn-consult-submit">
+                                GỬI THÔNG TIN
+                                <span class="arrow-circle">
+                                    <i class="bi bi-arrow-up-right"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+

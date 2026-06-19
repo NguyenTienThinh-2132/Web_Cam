@@ -1,0 +1,138 @@
+@model CamZone.Models.Product
+
+@{
+    ViewData["Title"] = "Thêm sản phẩm";
+}
+
+<!-- Page header -->
+<div class="bg-light border-bottom py-4">
+    <div class="container">
+        <nav aria-label="breadcrumb" class="mb-2">
+            <ol class="breadcrumb mb-0 small">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-decoration-none">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a asp-action="Index" class="text-decoration-none">Sản phẩm</a></li>
+                <li class="breadcrumb-item active">Thêm mới</li>
+            </ol>
+        </nav>
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="fw-bold mb-0"><i class="bi bi-plus-circle text-primary me-2"></i>Thêm sản phẩm mới</h2>
+            <a asp-action="Index" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-arrow-left me-1"></i>Quay lại
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container py-4">
+    <div class="row g-4">
+        <!-- Form -->
+        <div class="col-lg-8">
+            <form asp-action="Add" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="All" class="alert alert-danger small mb-3"></div>
+
+                <!-- Basic info card -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white border-bottom py-3">
+                        <h6 class="fw-semibold mb-0"><i class="bi bi-info-circle text-primary me-2"></i>Thông tin cơ bản</h6>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-3">
+                            <div class="col-md-8">
+                                <label asp-for="Name" class="form-label fw-semibold small text-uppercase text-muted" style="letter-spacing:.05em;">Tên sản phẩm <span class="text-danger">*</span></label>
+                                <input asp-for="Name" class="form-control form-control-lg" placeholder="Nhập tên sản phẩm..." />
+                                <span asp-validation-for="Name" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="CategoryId" class="form-label fw-semibold small text-uppercase text-muted" style="letter-spacing:.05em;">Danh mục <span class="text-danger">*</span></label>
+                                <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-select form-select-lg">
+                                    <option value="">-- Chọn danh mục --</option>
+                                </select>
+                                <span asp-validation-for="CategoryId" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-5">
+                                <label asp-for="Price" class="form-label fw-semibold small text-uppercase text-muted" style="letter-spacing:.05em;">Giá bán (₫) <span class="text-danger">*</span></label>
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-text bg-light">₫</span>
+                                    <input asp-for="Price" class="form-control" placeholder="0" />
+                                </div>
+                                <span asp-validation-for="Price" class="text-danger small"></span>
+                            </div>
+                            <div class="col-12">
+                                <label asp-for="Description" class="form-label fw-semibold small text-uppercase text-muted" style="letter-spacing:.05em;">Mô tả sản phẩm</label>
+                                <textarea asp-for="Description" class="form-control" rows="4" placeholder="Nhập mô tả chi tiết về sản phẩm..."></textarea>
+                                <span asp-validation-for="Description" class="text-danger small"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Images card -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white border-bottom py-3">
+                        <h6 class="fw-semibold mb-0"><i class="bi bi-images text-primary me-2"></i>Hình ảnh sản phẩm</h6>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small text-uppercase text-muted" style="letter-spacing:.05em;">Ảnh đại diện</label>
+                                <div class="upload-area border rounded-3 p-4 text-center" id="mainImagePreview">
+                                    <i class="bi bi-cloud-upload fs-2 text-muted mb-2 d-block"></i>
+                                    <p class="text-muted small mb-2">Kéo thả hoặc chọn ảnh</p>
+                                    <input type="file" name="imageUrl" class="form-control" accept="image/*" id="mainImageInput" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small text-uppercase text-muted" style="letter-spacing:.05em;">Ảnh phụ (nhiều ảnh)</label>
+                                <div class="upload-area border rounded-3 p-4 text-center">
+                                    <i class="bi bi-images fs-2 text-muted mb-2 d-block"></i>
+                                    <p class="text-muted small mb-2">Chọn nhiều ảnh cùng lúc</p>
+                                    <input type="file" name="imageUrls" class="form-control" multiple accept="image/*" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary btn-lg px-5">
+                        <i class="bi bi-check-circle me-2"></i>Thêm sản phẩm
+                    </button>
+                    <a asp-action="Index" class="btn btn-outline-secondary btn-lg px-4">Hủy</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Tips sidebar -->
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm bg-primary text-white">
+                <div class="card-body p-4">
+                    <h6 class="fw-semibold mb-3"><i class="bi bi-lightbulb me-2"></i>Mẹo đăng sản phẩm</h6>
+                    <ul class="small ps-3 mb-0 opacity-90">
+                        <li class="mb-2">Tên sản phẩm rõ ràng, đầy đủ thông tin</li>
+                        <li class="mb-2">Ảnh chụp rõ nét, nền trắng sẽ thu hút hơn</li>
+                        <li class="mb-2">Mô tả chi tiết chất liệu, kích thước, xuất xứ</li>
+                        <li class="mb-2">Giá cạnh tranh sẽ giúp bán hàng nhanh hơn</li>
+                        <li class="mb-0">Chọn đúng danh mục để khách dễ tìm kiếm</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm mt-3">
+                <div class="card-body p-4">
+                    <h6 class="fw-semibold mb-3"><i class="bi bi-check2-circle text-success me-2"></i>Yêu cầu ảnh</h6>
+                    <ul class="small text-muted ps-3 mb-0">
+                        <li class="mb-2">Định dạng: JPG, PNG, WEBP</li>
+                        <li class="mb-2">Kích thước tối thiểu: 400x400px</li>
+                        <li class="mb-2">Dung lượng tối đa: 5MB/ảnh</li>
+                        <li class="mb-0">Tỷ lệ vuông 1:1 tốt nhất</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

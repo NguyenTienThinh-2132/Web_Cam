@@ -1,0 +1,220 @@
+@model IEnumerable<CamZone.Models.Product>
+@{
+    ViewData["Title"] = "Tất cả máy ảnh - CamZone";
+}
+
+<!-- ===== PAGE HEADER ===== -->
+<div style="background:var(--color-surface-low); border-bottom:1px solid var(--color-outline); padding:40px 0;">
+    <div class="container">
+        <h1 class="fw-bold mb-2" style="font-size:2.5rem; color:var(--color-primary);">
+            <i class="bi bi-camera-fill me-3"></i>Danh Sách Máy Ảnh
+        </h1>
+        <p class="mb-0 fs-5" style="color:var(--color-muted);">
+            <i class="bi bi-box-seam me-2"></i>
+            @Model.Count() máy ảnh cao cấp đang có sẵn - Hàng chính hãng, bảo hành 24 tháng
+        </p>
+    </div>
+</div>
+
+<!-- ===== MAIN CONTENT: SIDEBAR + PRODUCTS ===== -->
+<section class="py-5" style="background:var(--color-surface);">
+    <div class="container">
+        <div class="row g-4">
+            <!-- SIDEBAR: FILTER PANEL -->
+            <div class="col-lg-3">
+                <div style="background:#ffffff; border:1px solid var(--color-outline); border-radius:8px; padding:24px;">
+                    <!-- Filter Title -->
+                    <h5 class="fw-bold mb-4" style="color:var(--color-primary); font-family:'Playfair Display', serif; font-size:1.3rem;">
+                        Lọc Sản Phẩm
+                    </h5>
+
+                    <!-- CATEGORIES FILTER -->
+                    <div class="mb-4">
+                        <h6 class="fw-600 mb-3" style="color:var(--color-on-surface); font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">
+                            Danh Mục
+                        </h6>
+                        <div class="d-flex flex-column gap-2">
+                            <label style="display:flex; align-items:center; gap:8px; cursor:pointer; color:var(--color-on-surface); font-size:0.95rem; margin-bottom:0;">
+                                <input type="checkbox" style="accent-color:var(--color-secondary);" />
+                                Máy Ảnh Mirrorless
+                            </label>
+                            <label style="display:flex; align-items:center; gap:8px; cursor:pointer; color:var(--color-on-surface); font-size:0.95rem; margin-bottom:0;">
+                                <input type="checkbox" style="accent-color:var(--color-secondary);" />
+                                Máy Ảnh DSLR
+                            </label>
+                            <label style="display:flex; align-items:center; gap:8px; cursor:pointer; color:var(--color-on-surface); font-size:0.95rem; margin-bottom:0;">
+                                <input type="checkbox" style="accent-color:var(--color-secondary);" />
+                                Ống Kính
+                            </label>
+                            <label style="display:flex; align-items:center; gap:8px; cursor:pointer; color:var(--color-on-surface); font-size:0.95rem; margin-bottom:0;">
+                                <input type="checkbox" style="accent-color:var(--color-secondary);" />
+                                Phụ Kiện
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- PRICE RANGE FILTER -->
+                    <div class="mb-4" style="border-top:1px solid var(--color-outline); padding-top:24px;">
+                        <h6 class="fw-600 mb-3" style="color:var(--color-on-surface); font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">
+                            Khoảng Giá
+                        </h6>
+                        <div class="d-flex flex-column gap-2">
+                            <label style="display:flex; align-items:center; gap:8px; cursor:pointer; color:var(--color-on-surface); font-size:0.95rem; margin-bottom:0;">
+                                <input type="checkbox" style="accent-color:var(--color-secondary);" />
+                                Dưới 10 triệu
+                            </label>
+                            <label style="display:flex; align-items:center; gap:8px; cursor:pointer; color:var(--color-on-surface); font-size:0.95rem; margin-bottom:0;">
+                                <input type="checkbox" style="accent-color:var(--color-secondary);" />
+                                10 - 20 triệu
+                            </label>
+                            <label style="display:flex; align-items:center; gap:8px; cursor:pointer; color:var(--color-on-surface); font-size:0.95rem; margin-bottom:0;">
+                                <input type="checkbox" style="accent-color:var(--color-secondary);" />
+                                20 - 50 triệu
+                            </label>
+                            <label style="display:flex; align-items:center; gap:8px; cursor:pointer; color:var(--color-on-surface); font-size:0.95rem; margin-bottom:0;">
+                                <input type="checkbox" style="accent-color:var(--color-secondary);" />
+                                Trên 50 triệu
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- APPLY FILTER BUTTON -->
+                    <button class="btn btn-primary-hl w-100" style="margin-top:24px;">
+                        Áp Dụng Bộ Lọc
+                    </button>
+                </div>
+            </div>
+
+            <!-- PRODUCTS AREA -->
+            <div class="col-lg-9">
+                <!-- SEARCH + SORT BAR -->
+                <div class="d-flex gap-3 align-items-center mb-4 flex-wrap">
+                    <form method="get" class="flex-grow-1 d-flex gap-2">
+                        <input type="text" name="search" placeholder="Tìm máy ảnh..."
+                               class="form-control auth-input"
+                               style="padding:12px 16px; border:1px solid var(--color-outline); border-radius:8px; background:#ffffff;" />
+                        <button type="submit" class="btn btn-primary-hl text-nowrap">
+                            <i class="bi bi-search me-2"></i>Tìm kiếm
+                        </button>
+                    </form>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span style="font-size:0.85rem; color:var(--color-muted); text-transform:uppercase; letter-spacing:0.05em;">Sắp xếp:</span>
+                        <select style="border:1px solid var(--color-outline); border-radius:8px; padding:8px 12px; background:#ffffff; color:var(--color-on-surface); font-size:0.9rem;">
+                            <option>Mới nhất</option>
+                            <option>Giá thấp đến cao</option>
+                            <option>Giá cao đến thấp</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- PRODUCTS GRID -->
+                @if (Model.Any())
+                {
+                    <div class="row g-4">
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-6 col-md-6 col-lg-4">
+                                <div class="card product-card h-100 border-0">
+                                    <!-- Image Section -->
+                                    <div class="product-img-wrap position-relative">
+                                        <img src="@item.ImageUrl" class="card-img-top product-img"
+                                             alt="@item.Name" style="height:240px; object-fit:cover;">
+
+                                        <!-- Badge -->
+                                        <span class="position-absolute top-0 start-0 m-3 badge"
+                                              style="background:var(--color-secondary); color:var(--color-primary); padding:6px 12px;">
+                                            <i class="bi bi-star-fill me-1"></i>Nổi bật
+                                        </span>
+
+                                        <!-- Hover Actions -->
+                                        <div class="product-hover-actions">
+                                            <a href="@Url.Action("Details", "SanPham", new { id = item.Id })"
+                                               class="btn btn-sm rounded-circle p-2"
+                                               style="background:var(--color-secondary); border:none; width:40px; height:40px; display:flex; align-items:center; justify-content:center;"
+                                               title="Xem chi tiết">
+                                                <i class="bi bi-eye-fill" style="color:var(--color-primary);"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <!-- Product Info -->
+                                    <div class="card-body d-flex flex-column p-3">
+                                        <span class="small mb-2" style="color:var(--color-secondary); font-weight:600; text-transform:uppercase; letter-spacing:0.05em;">
+                                            Máy Ảnh
+                                        </span>
+
+                                        <h6 class="card-title fw-semibold product-title mb-2"
+                                            style="color:var(--color-primary); font-size:0.95rem;">
+                                            @Html.DisplayFor(modelItem => item.Name)
+                                        </h6>
+
+                                        <p class="product-desc small mb-3">
+                                            Máy ảnh chuyên nghiệp với cảm biến full-frame và hiệu năng vượt trội.
+                                        </p>
+
+                                        <!-- Price -->
+                                        <div class="mb-3">
+                                            <div class="price-tag fs-5 fw-bold" style="color:var(--color-primary);">
+                                                @item.Price.ToString("#,##0")<span class="fs-6">₫</span>
+                                            </div>
+                                            <div class="small" style="color:var(--color-muted);">
+                                                <i class="bi bi-shield-check me-1" style="color:var(--color-secondary);"></i>
+                                                <span>Bảo hành 24 tháng</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Add to Cart Button -->
+                                        <button class="btn btn-add-cart mt-auto fw-600 py-2"
+                                                data-product-id="@item.Id">
+                                            <i class="bi bi-bag-fill me-2"></i>Thêm vào giỏ
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center py-5">
+                        <div style="font-size:4rem; margin-bottom:16px;">📷</div>
+                        <h4 style="color:var(--color-primary);">Không tìm thấy máy ảnh nào</h4>
+                        <p style="color:var(--color-muted);">Hãy thử lại với từ khóa khác hoặc quay lại sau.</p>
+                        <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-primary-hl mt-3">
+                            <i class="bi bi-house me-2"></i>Quay lại trang chủ
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .product-card {
+        background: #ffffff;
+        border: 1px solid var(--color-outline);
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        transition: all 0.3s ease;
+    }
+
+    .product-card:hover {
+        box-shadow: var(--shadow-md);
+        transform: translateY(-4px);
+    }
+
+    .card-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    @@media (max-width: 992px) {
+        .col-lg-3, .col-lg-9 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+    }
+</style>

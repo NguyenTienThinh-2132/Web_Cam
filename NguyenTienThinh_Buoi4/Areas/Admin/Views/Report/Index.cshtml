@@ -1,0 +1,651 @@
+@{
+    ViewData["Title"] = "Thống kê bán hàng";
+
+    var topProducts = ViewBag.TopProducts as List<dynamic> ?? new List<dynamic>();
+    var worstProducts = ViewBag.WorstProducts as List<dynamic> ?? new List<dynamic>();
+    var topCategories = ViewBag.TopCategories as List<dynamic> ?? new List<dynamic>();
+    var worstCategories = ViewBag.WorstCategories as List<dynamic> ?? new List<dynamic>();
+    var topCustomers = ViewBag.TopCustomers as List<dynamic> ?? new List<dynamic>();
+}
+
+<style>
+    :root {
+        --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --success-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        --info-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        --warning-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    }
+
+    .page-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 3rem 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .page-header::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -10%;
+        width: 500px;
+        height: 500px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+    }
+
+    .page-header::after {
+        content: '';
+        position: absolute;
+        bottom: -30%;
+        left: -5%;
+        width: 400px;
+        height: 400px;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 50%;
+    }
+
+    .page-header-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .stat-card {
+        border: none;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        position: relative;
+        overflow: hidden;
+        background: white;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    .stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: var(--card-gradient, #667eea);
+    }
+
+    .stat-card.revenue { --card-gradient: linear-gradient(90deg, #667eea, #764ba2); }
+    .stat-card.orders { --card-gradient: linear-gradient(90deg, #f093fb, #f5576c); }
+    .stat-card.customers { --card-gradient: linear-gradient(90deg, #4facfe, #00f2fe); }
+    .stat-card.products { --card-gradient: linear-gradient(90deg, #fa709a, #fee140); }
+
+    .stat-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+    }
+
+    .stat-value {
+        font-size: 28px;
+        font-weight: 700;
+        margin: 8px 0;
+        color: #1a1a1a;
+    }
+
+    .stat-label {
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #999;
+        font-weight: 600;
+    }
+
+    .filter-card {
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        background: white;
+    }
+
+    .filter-card .card-header {
+        background: white !important;
+        border-bottom: 2px solid #f0f0f0;
+        border-radius: 12px 12px 0 0;
+    }
+
+    .table-card {
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        background: white;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .table-card:hover {
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    .table-card .card-header {
+        background: linear-gradient(135deg, #f5f7fa 0%, #f0f2f5 100%);
+        border-bottom: 2px solid #e8e8e8;
+        border-radius: 12px 12px 0 0;
+    }
+
+    .table-header-title {
+        font-size: 15px;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin: 0;
+    }
+
+    .table-rank-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 12px;
+    }
+
+    .rank-1 { background: linear-gradient(135deg, #ffd700, #ffed4e); color: #856404; }
+    .rank-2 { background: linear-gradient(135deg, #c0c0c0, #e0e0e0); color: #333; }
+    .rank-3 { background: linear-gradient(135deg, #cd7f32, #daa520); color: white; }
+    .rank-other { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
+
+    .custom-table {
+        margin-bottom: 0;
+    }
+
+    .custom-table thead tr {
+        background: linear-gradient(135deg, #f5f7fa 0%, #f0f2f5 100%);
+        border-bottom: 2px solid #e8e8e8;
+    }
+
+    .custom-table th {
+        padding: 16px 20px;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #666;
+        border: none;
+    }
+
+    .custom-table tbody tr {
+        transition: all 0.2s ease;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .custom-table tbody tr:hover {
+        background-color: #f8f9fa !important;
+    }
+
+    .custom-table td {
+        padding: 16px 20px;
+        vertical-align: middle;
+        color: #333;
+        font-size: 13px;
+    }
+
+    .empty-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 20px;
+        color: #999;
+    }
+
+    .empty-state i {
+        font-size: 48px;
+        opacity: 0.3;
+        margin-bottom: 16px;
+    }
+
+    .input-group .form-control {
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
+        padding: 10px 14px;
+        font-size: 13px;
+        transition: all 0.2s ease;
+    }
+
+    .input-group .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        border-radius: 8px;
+        padding: 10px 24px;
+        font-weight: 600;
+        font-size: 13px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        color: white;
+    }
+
+    .breadcrumb {
+        background: transparent;
+        padding: 0;
+    }
+
+    .breadcrumb-item {
+        font-size: 13px;
+    }
+
+    .breadcrumb-item a {
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    .breadcrumb-item.active {
+        color: rgba(255, 255, 255, 0.9);
+    }
+</style>
+
+<!-- Page Header -->
+<div class="page-header">
+    <div class="container page-header-content">
+        <nav aria-label="breadcrumb" class="mb-3">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a asp-area="" asp-controller="Home" asp-action="Index">Trang chủ</a>
+                </li>
+                <li class="breadcrumb-item active">Thống kê</li>
+            </ol>
+        </nav>
+        <div>
+            <h1 class="fw-bold mb-2" style="font-size: 32px;">Thống kê bán hàng</h1>
+            <p class="mb-0" style="font-size: 15px; opacity: 0.9;">
+                <i class="bi bi-graph-up me-2"></i>Phân tích doanh số và hiệu suất theo khoảng thời gian
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="container py-5">
+    <!-- Filter Section -->
+    <div class="filter-card mb-4">
+        <div class="card-header px-4 py-4">
+            <h6 class="table-header-title">
+                <i class="bi bi-funnel me-2" style="color: #667eea;"></i>Lọc theo khoảng thời gian
+            </h6>
+        </div>
+        <div class="card-body p-4">
+            <form method="get" asp-action="Index" class="row g-3 align-items-end">
+                <div class="col-md-5">
+                    <label for="fromDate" class="form-label fw-600 mb-2" style="font-size: 13px; color: #666;">
+                        <i class="bi bi-calendar2-event me-1"></i>Từ ngày
+                    </label>
+                    <input type="date" id="fromDate" name="fromDate" class="form-control"
+                           value="@ViewBag.FromDate" />
+                </div>
+                <div class="col-md-5">
+                    <label for="toDate" class="form-label fw-600 mb-2" style="font-size: 13px; color: #666;">
+                        <i class="bi bi-calendar2-event me-1"></i>Đến ngày
+                    </label>
+                    <input type="date" id="toDate" name="toDate" class="form-control"
+                           value="@ViewBag.ToDate" />
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-search me-2"></i>Lọc
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="row g-4 mb-5">
+        <!-- Revenue -->
+        <div class="col-sm-6 col-lg-3">
+            <div class="stat-card revenue h-100 p-4">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <div class="stat-label">Tổng doanh thu</div>
+                        <div class="stat-value">
+                            @(ViewBag.TotalRevenue > 0 ? (ViewBag.TotalRevenue / 1_000_000).ToString("F1") + "M" : "0")
+                        </div>
+                        <small class="text-muted">@ViewBag.TotalRevenue.ToString("#,##0")₫</small>
+                    </div>
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #667eea15, #764ba215);">
+                        <i class="bi bi-cash-coin" style="color: #667eea;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Orders -->
+        <div class="col-sm-6 col-lg-3">
+            <div class="stat-card orders h-100 p-4">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <div class="stat-label">Tổng đơn hàng</div>
+                        <div class="stat-value">@ViewBag.TotalOrders</div>
+                        <small class="text-muted">đơn hàng</small>
+                    </div>
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb15, #f5576c15);">
+                        <i class="bi bi-receipt" style="color: #f5576c;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customers -->
+        <div class="col-sm-6 col-lg-3">
+            <div class="stat-card customers h-100 p-4">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <div class="stat-label">Tổng khách hàng</div>
+                        <div class="stat-value">@ViewBag.TotalCustomers</div>
+                        <small class="text-muted">khách hàng</small>
+                    </div>
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe15, #00f2fe15);">
+                        <i class="bi bi-people" style="color: #00f2fe;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Products -->
+        <div class="col-sm-6 col-lg-3">
+            <div class="stat-card products h-100 p-4">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <div class="stat-label">Tổng sản phẩm bán</div>
+                        <div class="stat-value">@ViewBag.TotalQuantity</div>
+                        <small class="text-muted">cái</small>
+                    </div>
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #fa709a15, #fee14015);">
+                        <i class="bi bi-box-seam" style="color: #fa709a;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tables Section -->
+    <div class="row g-4 mb-4">
+        <!-- Top Products -->
+        <div class="col-lg-6">
+            <div class="table-card h-100">
+                <div class="card-header px-4 py-3">
+                    <h6 class="table-header-title mb-0">
+                        <i class="bi bi-star-fill me-2" style="color: #ffc107;"></i>Top 5 sản phẩm bán chạy
+                    </h6>
+                </div>
+                <div class="card-body p-0">
+                    @if (topProducts != null && topProducts.Count > 0)
+                    {
+                        <table class="table custom-table">
+                            <thead>
+                                <tr>
+                                    <th>Sản phẩm</th>
+                                    <th class="text-end">Số lượng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{int idx = 1;}
+                                @foreach (var product in topProducts)
+                                {
+                                    string rankClass = idx == 1 ? "rank-1" : idx == 2 ? "rank-2" : idx == 3 ? "rank-3" : "rank-other";
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-3">
+                                                <span class="table-rank-badge @rankClass">#@idx</span>
+                                                <span>@product.Name</span>
+                                            </div>
+                                        </td>
+                                        <td class="text-end">
+                                            <span class="fw-600">@product.Quantity</span>
+                                        </td>
+                                    </tr>
+                                    idx++;
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <div class="empty-state">
+                            <i class="bi bi-inbox"></i>
+                            <p class="mb-0">Không có dữ liệu</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Worst Products -->
+        <div class="col-lg-6">
+            <div class="table-card h-100">
+                <div class="card-header px-4 py-3">
+                    <h6 class="table-header-title mb-0">
+                        <i class="bi bi-arrow-down-circle-fill me-2" style="color: #dc3545;"></i>Top 5 sản phẩm bán tệ
+                    </h6>
+                </div>
+                <div class="card-body p-0">
+                    @if (worstProducts != null && worstProducts.Count > 0)
+                    {
+                        <table class="table custom-table">
+                            <thead>
+                                <tr>
+                                    <th>Sản phẩm</th>
+                                    <th class="text-end">Số lượng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{int idx2 = 1;}
+                                @foreach (var product in worstProducts)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-3">
+                                                <span class="table-rank-badge rank-other">#@idx2</span>
+                                                <span>@product.Name</span>
+                                            </div>
+                                        </td>
+                                        <td class="text-end">
+                                            <span class="fw-600">@product.Quantity</span>
+                                        </td>
+                                    </tr>
+                                    idx2++;
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <div class="empty-state">
+                            <i class="bi bi-inbox"></i>
+                            <p class="mb-0">Không có dữ liệu</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <!-- Top Categories -->
+        <div class="col-lg-6">
+            <div class="table-card h-100">
+                <div class="card-header px-4 py-3">
+                    <h6 class="table-header-title mb-0">
+                        <i class="bi bi-graph-up me-2" style="color: #28a745;"></i>Top 5 danh mục bán chạy
+                    </h6>
+                </div>
+                <div class="card-body p-0">
+                    @if (topCategories != null && topCategories.Count > 0)
+                    {
+                        <table class="table custom-table">
+                            <thead>
+                                <tr>
+                                    <th>Danh mục</th>
+                                    <th class="text-end">Số lượng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{int idx3 = 1;}
+                                @foreach (var category in topCategories)
+                                {
+                                    string rankClass = idx3 == 1 ? "rank-1" : idx3 == 2 ? "rank-2" : idx3 == 3 ? "rank-3" : "rank-other";
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-3">
+                                                <span class="table-rank-badge @rankClass">#@idx3</span>
+                                                <span>@category.Name</span>
+                                            </div>
+                                        </td>
+                                        <td class="text-end">
+                                            <span class="fw-600">@category.Quantity</span>
+                                        </td>
+                                    </tr>
+                                    idx3++;
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <div class="empty-state">
+                            <i class="bi bi-inbox"></i>
+                            <p class="mb-0">Không có dữ liệu</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Worst Categories -->
+        <div class="col-lg-6">
+            <div class="table-card h-100">
+                <div class="card-header px-4 py-3">
+                    <h6 class="table-header-title mb-0">
+                        <i class="bi bi-graph-down me-2" style="color: #ffc107;"></i>Top 5 danh mục bán tệ
+                    </h6>
+                </div>
+                <div class="card-body p-0">
+                    @if (worstCategories != null && worstCategories.Count > 0)
+                    {
+                        <table class="table custom-table">
+                            <thead>
+                                <tr>
+                                    <th>Danh mục</th>
+                                    <th class="text-end">Số lượng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{int idx4 = 1;}
+                                @foreach (var category in worstCategories)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-3">
+                                                <span class="table-rank-badge rank-other">#@idx4</span>
+                                                <span>@category.Name</span>
+                                            </div>
+                                        </td>
+                                        <td class="text-end">
+                                            <span class="fw-600">@category.Quantity</span>
+                                        </td>
+                                    </tr>
+                                    idx4++;
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <div class="empty-state">
+                            <i class="bi bi-inbox"></i>
+                            <p class="mb-0">Không có dữ liệu</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Customers -->
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="table-card">
+                <div class="card-header px-4 py-3">
+                    <h6 class="table-header-title mb-0">
+                        <i class="bi bi-person-check-fill me-2" style="color: #667eea;"></i>Top 5 khách hàng mua nhiều nhất
+                    </h6>
+                </div>
+                <div class="card-body p-0">
+                    @if (topCustomers != null && topCustomers.Count > 0)
+                    {
+                        <table class="table custom-table">
+                            <thead>
+                                <tr>
+                                    <th>Khách hàng</th>
+                                    <th class="text-end">Doanh thu</th>
+                                    <th class="text-end">Số đơn</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{int idx5 = 1;}
+                                @foreach (var customer in topCustomers)
+                                {
+                                    string rankClass = idx5 == 1 ? "rank-1" : idx5 == 2 ? "rank-2" : idx5 == 3 ? "rank-3" : "rank-other";
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-3">
+                                                <span class="table-rank-badge @rankClass">#@idx5</span>
+                                                <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center"
+                                                     style="width: 36px; height: 36px; flex-shrink: 0;">
+                                                    <i class="bi bi-person text-primary small"></i>
+                                                </div>
+                                                <div>
+                                                    <span class="fw-600 d-block">@customer.Customer</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-end">
+                                            <span class="fw-600" style="color: #667eea;">
+                                                @customer.Revenue.ToString("#,##0")₫
+                                            </span>
+                                        </td>
+                                        <td class="text-end">
+                                            <span class="badge bg-primary bg-opacity-10 text-primary fw-600">
+                                                @customer.Orders đơn
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    idx5++;
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <div class="empty-state">
+                            <i class="bi bi-inbox"></i>
+                            <p class="mb-0">Không có dữ liệu</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

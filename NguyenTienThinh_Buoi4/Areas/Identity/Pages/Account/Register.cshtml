@@ -1,0 +1,350 @@
+@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Đăng ký - CamZone";
+}
+
+<style>
+    body {
+        background: var(--color-surface);
+        position: relative;
+    }
+
+    body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image:
+            radial-gradient(circle at 20% 50%, rgba(212, 163, 115, 0.03) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(61, 43, 31, 0.02) 0%, transparent 50%);
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    .page-wrapper {
+        position: relative;
+        z-index: 1;
+    }
+
+    .auth-card {
+        max-width: 900px;
+        background: #ffffff;
+        border: 1px solid var(--color-outline);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: var(--shadow-md);
+        display: flex;
+    }
+
+    .auth-panel-dark {
+        background: var(--color-inverse);
+        color: var(--color-surface);
+        padding: 60px 40px;
+        flex: 0 0 45%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .auth-panel-light {
+        background: #ffffff;
+        padding: 60px 40px;
+        flex: 0 0 55%;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .auth-icon {
+        width: 60px;
+        height: 60px;
+        background: rgba(212, 163, 115, 0.15);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--color-secondary);
+        font-size: 1.8rem;
+        margin-bottom: 32px;
+    }
+
+    .auth-tagline {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.8rem;
+        font-weight: 700;
+        line-height: 1.3;
+        margin-bottom: 24px;
+    }
+
+    .auth-description {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        opacity: 0.8;
+        margin-bottom: 32px;
+    }
+
+    .auth-footer-text {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        opacity: 0.6;
+        margin-top: auto;
+    }
+
+    .auth-tabs {
+        display: flex;
+        border-bottom: 1px solid var(--color-outline);
+        margin-bottom: 32px;
+        gap: 0;
+    }
+
+    .auth-tab {
+        flex: 1;
+        padding-bottom: 12px;
+        text-align: center;
+        font-family: 'Work Sans', sans-serif;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--color-muted);
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+        margin-bottom: -1px;
+        transition: all 0.3s ease;
+    }
+
+    .auth-tab.active {
+        color: var(--color-primary);
+        border-bottom-color: var(--color-primary);
+    }
+
+    .auth-form-group {
+        margin-bottom: 24px;
+    }
+
+    .auth-label {
+        display: block;
+        font-family: 'Work Sans', sans-serif;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--color-accent);
+        margin-bottom: 8px;
+    }
+
+    .auth-input {
+        width: 100%;
+        padding: 12px 0;
+        border: none;
+        border-bottom: 1px solid var(--color-outline);
+        background: transparent;
+        color: var(--color-on-surface);
+        font-family: 'Work Sans', sans-serif;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+    }
+
+    .auth-input::placeholder {
+        color: var(--color-muted);
+        opacity: 0.6;
+    }
+
+    .auth-input:focus {
+        outline: none;
+        border-bottom-color: var(--color-secondary);
+        box-shadow: none;
+    }
+
+    .auth-select {
+        width: 100%;
+        padding: 12px 0;
+        border: none;
+        border-bottom: 1px solid var(--color-outline);
+        background: transparent;
+        color: var(--color-on-surface);
+        font-family: 'Work Sans', sans-serif;
+        font-size: 0.95rem;
+    }
+
+    .auth-select:focus {
+        outline: none;
+        border-bottom-color: var(--color-secondary);
+        box-shadow: none;
+    }
+
+    .auth-submit {
+        width: 100%;
+        padding: 16px;
+        background: var(--color-primary);
+        color: var(--color-surface);
+        border: none;
+        border-radius: 8px;
+        font-family: 'Work Sans', sans-serif;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .auth-submit:hover {
+        background: var(--color-accent);
+    }
+
+    .auth-footer-links {
+        margin-top: 32px;
+        text-align: center;
+    }
+
+    .auth-footer-link {
+        display: block;
+        font-size: 0.9rem;
+        color: var(--color-secondary);
+        text-decoration: none;
+        margin-bottom: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .auth-footer-link:hover {
+        color: var(--color-primary);
+    }
+
+    @@media (max-width: 768px) {
+        .auth-card {
+            flex-direction: column;
+        }
+
+        .auth-panel-dark,
+        .auth-panel-light {
+            flex: 0 0 auto;
+            padding: 40px 30px;
+        }
+
+        .auth-panel-light {
+            max-height: none;
+        }
+    }
+</style>
+
+<div class="page-wrapper">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-12" style="max-width: 900px;">
+                <div class="auth-card">
+                    <!-- Left Panel: Dark -->
+                    <div class="auth-panel-dark">
+                        <div>
+                            <div class="auth-icon">
+                                <i class="bi bi-sparkles"></i>
+                            </div>
+                            <h2 class="auth-tagline">Gia Nhập Cộng Đồng.</h2>
+                            <p class="auth-description">
+                                Tạo tài khoản để khám phá bộ sưu tập máy ảnh độc quyền,
+                                nhận ưu đãi đặc biệt, và tham gia cộng đồng những người yêu thích nhiếp ảnh.
+                            </p>
+                        </div>
+                        <p class="auth-footer-text">🎥 ESTABLISHED 2024</p>
+                    </div>
+
+                    <!-- Right Panel: Light -->
+                    <div class="auth-panel-light">
+                        <!-- Tabs -->
+                        <div class="auth-tabs">
+                            <div class="auth-tab">Đăng Nhập</div>
+                            <div class="auth-tab active">Đăng Ký</div>
+                        </div>
+
+                        <!-- Register Form -->
+                        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                            <div class="auth-form-group">
+                                <label class="auth-label" asp-for="Input.FullName">Họ Tên</label>
+                                <input asp-for="Input.FullName" class="auth-input" autocomplete="fullname" aria-required="true" placeholder="Nhập họ và tên" />
+                                <span asp-validation-for="Input.FullName" class="text-danger small d-block mt-2"></span>
+                            </div>
+
+                            <div class="row" style="gap:24px;">
+                                <div style="flex:1;">
+                                    <div class="auth-form-group mb-0">
+                                        <label class="auth-label">Tuổi</label>
+                                        <input asp-for="Input.Age" class="auth-input" autocomplete="age" aria-required="true" placeholder="25" />
+                                        <span asp-validation-for="Input.Age" class="text-danger small d-block mt-2"></span>
+                                    </div>
+                                </div>
+                                <div style="flex:1;">
+                                    <div class="auth-form-group mb-0">
+                                        <label class="auth-label">Giới Tính</label>
+                                        <select asp-for="Input.GioiTinh" class="auth-select">
+                                            <option value="">-- Chọn --</option>
+                                            <option value="Nam">Nam</option>
+                                            <option value="Nữ">Nữ</option>
+                                            <option value="Khác">Khác</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="auth-form-group">
+                                <label class="auth-label" asp-for="Input.Address">Địa Chỉ</label>
+                                <input asp-for="Input.Address" class="auth-input" autocomplete="address" aria-required="true" placeholder="Nhập địa chỉ" />
+                                <span asp-validation-for="Input.Address" class="text-danger small d-block mt-2"></span>
+                            </div>
+
+                            <div class="auth-form-group">
+                                <label class="auth-label" asp-for="Input.NgheNghiep">Nghề Nghiệp</label>
+                                <input asp-for="Input.NgheNghiep" class="auth-input" placeholder="Nhập nghề nghiệp (tùy chọn)" />
+                            </div>
+
+                            <div class="auth-form-group">
+                                <label class="auth-label" asp-for="Input.Email">Email</label>
+                                <input asp-for="Input.Email" class="auth-input" autocomplete="email" aria-required="true" placeholder="your@email.com" />
+                                <span asp-validation-for="Input.Email" class="text-danger small d-block mt-2"></span>
+                            </div>
+
+                            <div class="auth-form-group">
+                                <label class="auth-label" asp-for="Input.Password">Mật Khẩu</label>
+                                <input asp-for="Input.Password" class="auth-input" autocomplete="new-password" aria-required="true" placeholder="••••••••" />
+                                <span asp-validation-for="Input.Password" class="text-danger small d-block mt-2"></span>
+                            </div>
+
+                            <div class="auth-form-group">
+                                <label class="auth-label" asp-for="Input.ConfirmPassword">Xác Nhận Mật Khẩu</label>
+                                <input asp-for="Input.ConfirmPassword" class="auth-input" autocomplete="new-password" aria-required="true" placeholder="••••••••" />
+                                <span asp-validation-for="Input.ConfirmPassword" class="text-danger small d-block mt-2"></span>
+                            </div>
+
+                            <button id="registerSubmit" type="submit" class="auth-submit">
+                                Đăng Ký
+                                <i class="bi bi-arrow-right"></i>
+                            </button>
+
+                            <div class="auth-footer-links">
+                                <p style="font-size:0.9rem; color:var(--color-on-surface); margin-bottom:0;">
+                                    Đã có tài khoản?
+                                    <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl" style="color:var(--color-secondary); font-weight:600; text-decoration:none;">
+                                        Đăng nhập ngay
+                                    </a>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

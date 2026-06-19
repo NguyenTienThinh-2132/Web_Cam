@@ -1,0 +1,166 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "F:\\HUTECH_Project\\web\\ChieuThu7\\NguyenTienThinh_Buoi4\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{39A967E8-6598-4A2D-2CEF-4832A0BC65FC}|NguyenTienThinh_Buoi4.csproj|f:\\hutech_project\\web\\chieuthu7\\NguyenTienThinh_Buoi4\\views\\category\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{39A967E8-6598-4A2D-2CEF-4832A0BC65FC}|NguyenTienThinh_Buoi4.csproj|solutionrelative:views\\category\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39A967E8-6598-4A2D-2CEF-4832A0BC65FC}|NguyenTienThinh_Buoi4.csproj|f:\\hutech_project\\web\\chieuthu7\\NguyenTienThinh_Buoi4\\views\\category\\add.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{39A967E8-6598-4A2D-2CEF-4832A0BC65FC}|NguyenTienThinh_Buoi4.csproj|solutionrelative:views\\category\\add.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39A967E8-6598-4A2D-2CEF-4832A0BC65FC}|NguyenTienThinh_Buoi4.csproj|f:\\hutech_project\\web\\chieuthu7\\NguyenTienThinh_Buoi4\\controllers\\categorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{39A967E8-6598-4A2D-2CEF-4832A0BC65FC}|NguyenTienThinh_Buoi4.csproj|solutionrelative:controllers\\categorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39A967E8-6598-4A2D-2CEF-4832A0BC65FC}|NguyenTienThinh_Buoi4.csproj|f:\\hutech_project\\web\\chieuthu7\\NguyenTienThinh_Buoi4\\views\\category\\update.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{39A967E8-6598-4A2D-2CEF-4832A0BC65FC}|NguyenTienThinh_Buoi4.csproj|solutionrelative:views\\category\\update.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39A967E8-6598-4A2D-2CEF-4832A0BC65FC}|NguyenTienThinh_Buoi4.csproj|f:\\hutech_project\\web\\chieuthu7\\NguyenTienThinh_Buoi4\\views\\category\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{39A967E8-6598-4A2D-2CEF-4832A0BC65FC}|NguyenTienThinh_Buoi4.csproj|solutionrelative:views\\category\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39A967E8-6598-4A2D-2CEF-4832A0BC65FC}|NguyenTienThinh_Buoi4.csproj|f:\\hutech_project\\web\\chieuthu7\\NguyenTienThinh_Buoi4\\views\\category\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{39A967E8-6598-4A2D-2CEF-4832A0BC65FC}|NguyenTienThinh_Buoi4.csproj|solutionrelative:views\\category\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 303,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Update.cshtml",
+              "DocumentMoniker": "F:\\HUTECH_Project\\web\\ChieuThu7\\NguyenTienThinh_Buoi4\\Views\\Category\\Update.cshtml",
+              "RelativeDocumentMoniker": "Views\\Category\\Update.cshtml",
+              "ToolTip": "F:\\HUTECH_Project\\web\\ChieuThu7\\NguyenTienThinh_Buoi4\\Views\\Category\\Update.cshtml",
+              "RelativeToolTip": "Views\\Category\\Update.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-23T07:53:18.74Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "F:\\HUTECH_Project\\web\\ChieuThu7\\NguyenTienThinh_Buoi4\\Views\\Category\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Category\\Index.cshtml",
+              "ToolTip": "F:\\HUTECH_Project\\web\\ChieuThu7\\NguyenTienThinh_Buoi4\\Views\\Category\\Index.cshtml",
+              "RelativeToolTip": "Views\\Category\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-23T07:53:14.202Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Details.cshtml",
+              "DocumentMoniker": "F:\\HUTECH_Project\\web\\ChieuThu7\\NguyenTienThinh_Buoi4\\Views\\Category\\Details.cshtml",
+              "RelativeDocumentMoniker": "Views\\Category\\Details.cshtml",
+              "ToolTip": "F:\\HUTECH_Project\\web\\ChieuThu7\\NguyenTienThinh_Buoi4\\Views\\Category\\Details.cshtml",
+              "RelativeToolTip": "Views\\Category\\Details.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-23T07:53:11.461Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Delete.cshtml",
+              "DocumentMoniker": "F:\\HUTECH_Project\\web\\ChieuThu7\\NguyenTienThinh_Buoi4\\Views\\Category\\Delete.cshtml",
+              "RelativeDocumentMoniker": "Views\\Category\\Delete.cshtml",
+              "ToolTip": "F:\\HUTECH_Project\\web\\ChieuThu7\\NguyenTienThinh_Buoi4\\Views\\Category\\Delete.cshtml",
+              "RelativeToolTip": "Views\\Category\\Delete.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-23T07:53:08.666Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{74946827-37a0-11d2-a273-00c04f8ef4ff}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Add.cshtml",
+              "DocumentMoniker": "F:\\HUTECH_Project\\web\\ChieuThu7\\NguyenTienThinh_Buoi4\\Views\\Category\\Add.cshtml",
+              "RelativeDocumentMoniker": "Views\\Category\\Add.cshtml",
+              "ToolTip": "F:\\HUTECH_Project\\web\\ChieuThu7\\NguyenTienThinh_Buoi4\\Views\\Category\\Add.cshtml",
+              "RelativeToolTip": "Views\\Category\\Add.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-23T07:53:04.596Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CategoryController.cs",
+              "DocumentMoniker": "F:\\HUTECH_Project\\web\\ChieuThu7\\NguyenTienThinh_Buoi4\\Controllers\\CategoryController.cs",
+              "RelativeDocumentMoniker": "Controllers\\CategoryController.cs",
+              "ToolTip": "F:\\HUTECH_Project\\web\\ChieuThu7\\NguyenTienThinh_Buoi4\\Controllers\\CategoryController.cs",
+              "RelativeToolTip": "Controllers\\CategoryController.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAmwBEAAABFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-23T07:52:36.664Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 97,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
