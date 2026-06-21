@@ -26,7 +26,7 @@
             </div>
             @if (canEdit)
             {
-                <a asp-action="Add" class="btn btn-primary px-4">
+                <a asp-action="Add" class="btn btn-gold px-4">
                     <i class="bi bi-plus-circle me-2"></i>Thêm danh mục
                 </a>
             }
@@ -43,7 +43,7 @@
             <p class="text-muted mb-4">Tạo danh mục để phân loại sản phẩm của bạn.</p>
             @if (canEdit)
             {
-                <a asp-action="Add" class="btn btn-primary px-4">
+                <a asp-action="Add" class="btn btn-gold px-4">
                     <i class="bi bi-plus-circle me-2"></i>Thêm danh mục ngay
                 </a>
             }
@@ -70,9 +70,9 @@
                                     <td class="px-4 text-muted">#@category.Id</td>
                                     <td>
                                         <div class="d-flex align-items-center gap-3">
-                                            <div class="rounded-3 d-flex align-items-center justify-content-center bg-primary bg-opacity-10"
-                                                 style="width:40px;height:40px;flex-shrink:0;">
-                                                <i class="bi bi-tag text-primary"></i>
+                                            <div class="rounded-3 d-flex align-items-center justify-content-center"
+                                                 style="width:40px;height:40px;flex-shrink:0; background:rgba(212, 163, 115, 0.15);">
+                                                <i class="bi bi-tag" style="color:var(--color-secondary);"></i>
                                             </div>
                                             <span class="fw-semibold">@category.Name</span>
                                         </div>
@@ -82,24 +82,30 @@
                                             @(category.Products?.Count ?? 0)
                                         </span>
                                     </td>
-                                    <td class="text-center pe-4">
-                                        <div class="d-flex gap-2 justify-content-center">
+                                    <td class="text-center pe-4 text-nowrap">
+                                        <div class="d-flex gap-3 justify-content-center align-items-center text-nowrap">
                                             <a asp-action="Details" asp-route-id="@category.Id"
-                                               class="btn btn-outline-primary btn-sm" title="Chi tiết">
+                                               class="text-decoration-none small fw-semibold text-nowrap" style="color: var(--color-primary); transition: all 0.2s; white-space: nowrap !important;"
+                                               onmouseover="this.style.color='var(--color-secondary)'"
+                                               onmouseout="this.style.color='var(--color-primary)'">
                                                 <i class="bi bi-eye me-1"></i>Chi tiết
                                             </a>
                                             @if (canEdit)
                                             {
                                                 <a asp-action="Update" asp-route-id="@category.Id"
-                                                   class="btn btn-warning btn-sm" title="Sửa">
-                                                    <i class="bi bi-pencil"></i>
+                                                   class="text-decoration-none small text-muted text-nowrap" style="transition: all 0.2s; white-space: nowrap !important;"
+                                                   onmouseover="this.style.color='var(--color-secondary)'"
+                                                   onmouseout="this.style.color='var(--color-muted)'" title="Sửa">
+                                                    <i class="bi bi-pencil me-1"></i>Sửa
                                                 </a>
                                             }
                                             @if (canDelete)
                                             {
                                                 <a asp-action="Delete" asp-route-id="@category.Id"
-                                                   class="btn btn-outline-danger btn-sm" title="Xóa">
-                                                    <i class="bi bi-trash"></i>
+                                                   class="text-decoration-none small text-muted text-nowrap" style="transition: all 0.2s; white-space: nowrap !important;"
+                                                   onmouseover="this.style.color='#dc3545'"
+                                                   onmouseout="this.style.color='var(--color-muted)'" title="Xóa">
+                                                    <i class="bi bi-trash me-1"></i>Xóa
                                                 </a>
                                             }
                                         </div>

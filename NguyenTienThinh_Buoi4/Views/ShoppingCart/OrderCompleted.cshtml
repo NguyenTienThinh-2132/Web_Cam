@@ -6,7 +6,9 @@
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-lg-6 text-center">
-            <div style="font-size:5rem;" class="mb-3">🎉</div>
+            <div class="mb-3">
+                <i class="bi bi-check-circle" style="font-size: 5rem; color: var(--color-secondary);"></i>
+            </div>
             <h2 class="fw-bold text-success mb-3">Order Completed</h2>
             <p class="text-muted fs-5 mb-4">
                 Your order with ID <strong class="text-dark">#@Model</strong> has been placed successfully.
@@ -18,7 +20,7 @@
             </div>
 
             <div class="d-flex gap-3 justify-content-center">
-                <a asp-controller="SanPham" asp-action="Index" class="btn btn-primary btn-lg px-4">
+                <a asp-controller="SanPham" asp-action="Index" class="btn btn-gold btn-lg px-4">
                     <i class="bi bi-bag-heart me-2"></i>Tiếp tục mua sắm
                 </a>
                 <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary btn-lg px-4">

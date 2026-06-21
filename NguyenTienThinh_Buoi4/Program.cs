@@ -1,9 +1,15 @@
-﻿using CamZone.Models;
+using CamZone.Models;
 using CamZone.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.DataProtection;
+using System.IO;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Cấu hình Data Protection lưu key cục bộ để tránh lỗi CryptographicException khi cookie cũ giải mã lỗi
+builder.Services.AddDataProtection()
+    .PersistKeysToFileSystem(new DirectoryInfo(Path.Combine(builder.Environment.ContentRootPath, "temp_keys")));
 
 // Lưu thông tin giỏ hàng của khách hàng vào session
 builder.Services.AddDistributedMemoryCache();

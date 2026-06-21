@@ -439,6 +439,27 @@ footer .text-white-50 {
     width: 100%;
 }
 
+.social-icon-btn {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    line-height: 34px;
+    text-align: center;
+    border-radius: 50%;
+    border: 1px solid rgba(252, 249, 248, 0.25) !important;
+    color: var(--color-surface) !important;
+    transition: all 0.3s ease;
+    background: transparent;
+    display: inline-block;
+}
+
+.social-icon-btn:hover {
+    border-color: var(--color-secondary) !important;
+    color: var(--color-secondary) !important;
+    background: rgba(212, 163, 115, 0.1) !important;
+    transform: translateY(-2px);
+}
+
 /* ===== Badge ===== */
 .badge {
     border-radius: 10px;
@@ -791,4 +812,15 @@ footer .text-white-50 {
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--color-accent);
+}
+
+/* ===== Disable text selection on decorative and static elements ===== */
+.hero-clean,
+.hero-clean *,
+.service-card,
+.service-card * {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }

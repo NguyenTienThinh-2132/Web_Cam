@@ -1,4 +1,5 @@
 using CamZone.Models;
+using CamZone.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -7,14 +8,22 @@ namespace CamZone.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IProductRepository _productRepository;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IProductRepository productRepository)
         {
             _logger = logger;
+            _productRepository = productRepository;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var products = await _productRepository.GetAllAsync();
+            var featuredProducts = products
+                .OrderByDescending(p => p.Price)
+                .Take(6)
+                .ToList();
+            ViewBag.FeaturedProducts = featuredProducts;
             return View();
         }
 
@@ -24,6 +33,11 @@ namespace CamZone.Controllers
         }
 
         public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        public IActionResult BaoHanh()
         {
             return View();
         }

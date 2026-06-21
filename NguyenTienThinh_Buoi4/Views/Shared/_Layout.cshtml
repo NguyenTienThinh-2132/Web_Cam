@@ -47,7 +47,7 @@
                             <a class="nav-link nav-link-custom" href="/#section-tuvan">Liên Hệ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link nav-link-custom" href="#">Chính sách bảo hành</a>
+                            <a class="nav-link nav-link-custom" asp-area="" asp-controller="Home" asp-action="BaoHanh">Chính sách bảo hành</a>
                         </li>
                         @if (User.IsInRole("Admin"))
                         {
@@ -103,16 +103,16 @@
                         Nền tảng bán máy ảnh cao cấp, thiết bị nhiếp ảnh chính hãng, giao hàng nhanh toàn quốc.
                     </p>
                     <div class="d-flex gap-2">
-                        <a href="#" class="btn btn-outline-secondary btn-sm rounded-circle" style="width:36px;height:36px;padding:0;line-height:34px;text-align:center;">
+                        <a href="#" class="social-icon-btn">
                             <i class="bi bi-facebook"></i>
                         </a>
-                        <a href="#" class="btn btn-outline-secondary btn-sm rounded-circle" style="width:36px;height:36px;padding:0;line-height:34px;text-align:center;">
+                        <a href="#" class="social-icon-btn">
                             <i class="bi bi-instagram"></i>
                         </a>
-                        <a href="#" class="btn btn-outline-secondary btn-sm rounded-circle" style="width:36px;height:36px;padding:0;line-height:34px;text-align:center;">
+                        <a href="#" class="social-icon-btn">
                             <i class="bi bi-tiktok"></i>
                         </a>
-                        <a href="#" class="btn btn-outline-secondary btn-sm rounded-circle" style="width:36px;height:36px;padding:0;line-height:34px;text-align:center;">
+                        <a href="#" class="social-icon-btn">
                             <i class="bi bi-youtube"></i>
                         </a>
                     </div>
